@@ -65,7 +65,7 @@ public class Ch2Test {
 
         Stream<String> zipped = Ch2.zip(s1, s2);
 
-        Assertions.assertThat(zipped.limit(6).toArray()).containsExactly("A", "Z", "A", "Z", "A", "Z");
+        assertThat(zipped.limit(6).toArray()).containsExactly("A", "Z", "A", "Z", "A", "Z");
     }
 
     @Test

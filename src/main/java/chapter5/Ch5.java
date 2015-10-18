@@ -7,6 +7,8 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
+import static java.time.DayOfWeek.FRIDAY;
+
 public class Ch5 {
 
     public static TemporalAdjuster next(Predicate<LocalDate> predicate) {
@@ -20,5 +22,13 @@ public class Ch5 {
 
     public static long daysAliveSince(LocalDate birthDate) {
         return birthDate.until(LocalDate.now(), ChronoUnit.DAYS);
+    }
+
+    public static Stream<LocalDate> superstitiousDaysInBetween(LocalDate start, LocalDate end) {
+        long days = start.until(end, ChronoUnit.DAYS);
+        return Stream.iterate(start, d -> d.plusDays(1))
+                .limit(days)
+                .filter(d -> d.getDayOfWeek().equals(FRIDAY))
+                .filter(d -> d.getDayOfMonth() == 13);
     }
 }

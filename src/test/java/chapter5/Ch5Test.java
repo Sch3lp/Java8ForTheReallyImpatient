@@ -1,12 +1,20 @@
 package chapter5;
 
+import org.assertj.core.api.Condition;
+import org.assertj.core.data.Index;
 import org.junit.Test;
 
 import java.time.*;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static chapter5.Ch5.daysAliveSince;
 import static chapter5.Ch5.next;
+import static chapter5.Ch5.superstitiousDaysInBetween;
+import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.*;
 
 
@@ -41,4 +49,15 @@ public class Ch5Test {
         assertThat(daysAliveSince(LocalDate.now().minusWeeks(1))).isEqualTo(7);
         assertThat(daysAliveSince(LocalDate.of(1981, Month.JUNE, 18))).isEqualTo(12540);
     }
+
+    @Test
+    public void ex6() throws Exception {
+        LocalDate startOf19thCentury = LocalDate.ofYearDay(1900, 1);
+        LocalDate endOf20thCentury = LocalDate.ofYearDay(2000, 1);
+        Stream<LocalDate> superstitiousStream = superstitiousDaysInBetween(startOf19thCentury, endOf20thCentury);
+        assertThat(superstitiousStream.map(LocalDate::getDayOfWeek).collect(toList())).containsOnly(DayOfWeek.FRIDAY);
+        // Really wishing there were assertions with predicates on streams and lists.
+        // Something like assertThat(superstitiousStream).hasOnly(d -> d.getDayOfWeek.equals(FRIDAY));
+    }
+
 }

@@ -1,6 +1,7 @@
 package chapter5;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalAdjusters;
 import java.util.function.Predicate;
@@ -15,5 +16,9 @@ public class Ch5 {
                             .findFirst()
                             .get();
                 });
+    }
+
+    public static long daysAliveSince(LocalDate birthDate) {
+        return birthDate.until(LocalDate.now(), ChronoUnit.DAYS);
     }
 }
